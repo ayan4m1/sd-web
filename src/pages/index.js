@@ -11,6 +11,7 @@ import { Container, Row, Col, Carousel } from 'react-bootstrap';
 import SEO from 'components/seo';
 import Layout from 'components/layout';
 import { getImageUrl } from 'utils';
+import { Fragment } from 'react';
 
 export default function IndexPage({ data }) {
   const {
@@ -34,41 +35,47 @@ export default function IndexPage({ data }) {
     <Layout>
       <SEO title="Home" />
       <Container>
-        <h1>Newest Images</h1>
-        <Row className="justify-content-center">
-          <Col md={10}>
-            <Carousel
-              indicators={false}
-              className="mt-4"
-              nextIcon={
-                <FontAwesomeIcon icon={faArrowCircleRight} color="black" />
-              }
-              prevIcon={
-                <FontAwesomeIcon icon={faArrowCircleLeft} color="black" />
-              }
-            >
-              {filteredBoosts
-                .slice(0, Math.min(5, filteredBoosts.length))
-                .map((node) => (
-                  <Carousel.Item key={node.uuid}>
-                    <Row>
-                      <Col xs={2}></Col>
-                      <Col xs={8} className="text-center">
-                        <Link to={getImageUrl(node)}>
-                          <GatsbyImage
-                            image={findImage(
-                              node.imageResultByImageResultId.uuid
-                            )}
-                            alt="Featured Post"
-                          />
-                        </Link>
-                      </Col>
-                    </Row>
-                  </Carousel.Item>
-                ))}
-            </Carousel>
-          </Col>
-        </Row>
+        {filteredBoosts.length ? (
+          <Fragment>
+            <h1>Newest Images</h1>
+            <Row className="justify-content-center">
+              <Col md={10}>
+                <Carousel
+                  indicators={false}
+                  className="mt-4"
+                  nextIcon={
+                    <FontAwesomeIcon icon={faArrowCircleRight} color="black" />
+                  }
+                  prevIcon={
+                    <FontAwesomeIcon icon={faArrowCircleLeft} color="black" />
+                  }
+                >
+                  {filteredBoosts
+                    .slice(0, Math.min(5, filteredBoosts.length))
+                    .map((node) => (
+                      <Carousel.Item key={node.uuid}>
+                        <Row>
+                          <Col xs={2}></Col>
+                          <Col xs={8} className="text-center">
+                            <Link to={getImageUrl(node)}>
+                              <GatsbyImage
+                                image={findImage(
+                                  node.imageResultByImageResultId.uuid
+                                )}
+                                alt="Featured Post"
+                              />
+                            </Link>
+                          </Col>
+                        </Row>
+                      </Carousel.Item>
+                    ))}
+                </Carousel>
+              </Col>
+            </Row>
+          </Fragment>
+        ) : (
+          <h1>Check back soon for images!</h1>
+        )}
       </Container>
     </Layout>
   );

@@ -24,6 +24,8 @@ export default function ImagesPage({ data }) {
         )
       : {};
 
+  const filteredBoosts = boosts.filter((boost) => Boolean(boost.paid));
+
   return (
     <Layout>
       <SEO title="Images" description="Browse images" />
@@ -41,9 +43,8 @@ export default function ImagesPage({ data }) {
                 </tr>
               </thead>
               <tbody>
-                {boosts
-                  .filter((boost) => Boolean(boost.paid))
-                  .map((boost) => (
+                {filteredBoosts.length ? (
+                  filteredBoosts.map((boost) => (
                     <tr key={boost.uuid}>
                       <td>
                         <GatsbyImage
@@ -70,7 +71,12 @@ export default function ImagesPage({ data }) {
                         </Link>
                       </td>
                     </tr>
-                  ))}
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={4}>No images to display.</td>
+                  </tr>
+                )}
               </tbody>
             </Table>
           </Col>
