@@ -1,3 +1,3 @@
 module.exports = {
-  getImageUrl: (node) => `/image/${node.imageResultByImageResultId.uuid}`
+  getImageUrl: (node) => `/image/${node.uuid}`
 };

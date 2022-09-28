@@ -11,8 +11,8 @@ export default function Image({ data }) {
   const {
     postgres: {
       imageBoostByUuid: {
+        uuid,
         imageResultByImageResultId: {
-          uuid,
           seed,
           steps,
           created,
@@ -94,8 +94,8 @@ export const query = graphql`
   query ($uuid: String!) {
     postgres {
       imageBoostByUuid(uuid: $uuid) {
+        uuid
         imageResultByImageResultId {
-          uuid
           seed
           steps
           created

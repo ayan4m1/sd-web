@@ -11,9 +11,6 @@ const createImagePages = async ({ actions, graphql, reporter }) => {
           nodes {
             uuid
             paid
-            imageResultByImageResultId {
-              uuid
-            }
           }
         }
       }

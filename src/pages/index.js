@@ -59,9 +59,7 @@ export default function IndexPage({ data }) {
                           <Col xs={8} className="text-center">
                             <Link to={getImageUrl(node)}>
                               <GatsbyImage
-                                image={findImage(
-                                  node.imageResultByImageResultId.uuid
-                                )}
+                                image={findImage(node.uuid)}
                                 alt="Featured Post"
                               />
                             </Link>
@@ -92,9 +90,6 @@ export const query = graphql`
         nodes {
           uuid
           paid
-          imageResultByImageResultId {
-            uuid
-          }
         }
       }
     }

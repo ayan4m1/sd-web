@@ -47,11 +47,7 @@ export default function ImagesPage({ data }) {
                   filteredBoosts.map((boost) => (
                     <tr key={boost.uuid}>
                       <td>
-                        <GatsbyImage
-                          image={findImage(
-                            boost.imageResultByImageResultId.uuid
-                          )}
-                        />
+                        <GatsbyImage image={findImage(boost.uuid)} />
                       </td>
                       <td>
                         {
@@ -98,7 +94,6 @@ export const pageQuery = graphql`
           uuid
           paid
           imageResultByImageResultId {
-            uuid
             created
             imageRequestByImageRequestId {
               prompt
