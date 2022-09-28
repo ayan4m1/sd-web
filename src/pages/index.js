@@ -3,37 +3,43 @@ import {
   faArrowCircleLeft
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Carousel } from 'react-bootstrap';
 
 import SEO from 'components/seo';
 import Layout from 'components/layout';
+import { getImageUrl } from 'utils';
 
 export default function IndexPage({ data }) {
   const {
+    postgres: {
+      allImageBoosts: { nodes: boosts }
+    },
     allFile: { nodes: images }
   } = data;
-  const findImage = (url) =>
-    url
+
+  const findImage = (uuid) =>
+    uuid
       ? getImage(
-          images.find((image) =>
-            image.relativePath.endsWith(url.substring(url.lastIndexOf('/') + 1))
-          ).childImageSharp.gatsbyImageData
+          images.find((image) => image.relativePath === `${uuid}.png`)
+            ?.childImageSharp?.gatsbyImageData
         )
       : {};
+
+  const filteredBoosts = boosts.filter((node) => Boolean(node.paid));
 
   return (
     <Layout>
       <SEO title="Home" />
       <Container>
-        <h4 className="display-4">Featured Content</h4>
+        <h1>Newest Images</h1>
         <Row className="justify-content-center">
           <Col md={10}>
             <Carousel
               indicators={false}
-              className="mt-5"
+              className="mt-4"
               nextIcon={
                 <FontAwesomeIcon icon={faArrowCircleRight} color="black" />
               }
@@ -41,14 +47,25 @@ export default function IndexPage({ data }) {
                 <FontAwesomeIcon icon={faArrowCircleLeft} color="black" />
               }
             >
-              {images.map((node) => (
-                <Carousel.Item key={node.id}>
-                  <GatsbyImage
-                    image={findImage(node.uuid)}
-                    alt="Featured Post"
-                  />
-                </Carousel.Item>
-              ))}
+              {filteredBoosts
+                .slice(0, Math.min(5, filteredBoosts.length))
+                .map((node) => (
+                  <Carousel.Item key={node.uuid}>
+                    <Row>
+                      <Col xs={2}></Col>
+                      <Col xs={8} className="text-center">
+                        <Link to={getImageUrl(node)}>
+                          <GatsbyImage
+                            image={findImage(
+                              node.imageResultByImageResultId.uuid
+                            )}
+                            alt="Featured Post"
+                          />
+                        </Link>
+                      </Col>
+                    </Row>
+                  </Carousel.Item>
+                ))}
             </Carousel>
           </Col>
         </Row>
@@ -63,11 +80,23 @@ IndexPage.propTypes = {
 
 export const query = graphql`
   query {
-    allFile(filter: { relativeDirectory: { eq: "output" } }) {
+    postgres {
+      allImageBoosts(condition: { cancelled: null }, orderBy: PAID_DESC) {
+        nodes {
+          uuid
+          paid
+          imageResultByImageResultId {
+            uuid
+          }
+        }
+      }
+    }
+
+    allFile {
       nodes {
         relativePath
         childImageSharp {
-          gatsbyImageData(layout: CONSTRAINED, width: 800)
+          gatsbyImageData(layout: CONSTRAINED, width: 512)
         }
       }
     }
