@@ -1,8 +1,8 @@
+import { parseISO, formatDistanceToNow, addHours } from 'date-fns';
 import { graphql, Link } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
 import { Container, Table, Row, Col } from 'react-bootstrap';
-import { parseISO, formatDistanceToNow } from 'date-fns';
 
 import Layout from './layout';
 import SEO from './seo';
@@ -77,7 +77,9 @@ export default function Image({ data }) {
             </Table>
             <h2>Created</h2>
             <p title={created}>
-              {formatDistanceToNow(parseISO(created), { addSuffix: true })}
+              {formatDistanceToNow(addHours(parseISO(created), -6), {
+                addSuffix: true
+              })}
             </p>
           </Col>
         </Row>

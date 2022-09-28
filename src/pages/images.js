@@ -1,4 +1,4 @@
-import { formatDistanceToNow, parseISO } from 'date-fns';
+import { formatDistanceToNow, parseISO, addHours } from 'date-fns';
 import { graphql, Link } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
@@ -57,7 +57,10 @@ export default function ImagesPage({ data }) {
                       </td>
                       <td>
                         {formatDistanceToNow(
-                          parseISO(boost.imageResultByImageResultId.created),
+                          addHours(
+                            parseISO(boost.imageResultByImageResultId.created),
+                            -6
+                          ),
                           { addSuffix: true }
                         )}
                       </td>
