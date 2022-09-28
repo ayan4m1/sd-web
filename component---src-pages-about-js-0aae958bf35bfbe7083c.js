@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksd_web=self.webpackChunksd_web||[]).push([[682],{4633:function(n,e,s){s.r(e),s.d(e,{default:function(){return o}});var t=s(3639),i=s(2009),r=s(262),c=s(5893);function o(){return(0,c.jsxs)(i.Z,{children:[(0,c.jsx)(r.Z,{title:"About",description:"Explanation of this project"}),(0,c.jsxs)(t.Z,{children:[(0,c.jsx)("h1",{children:"About"}),(0,c.jsx)("p",{children:"Coming Soon ™"})]})]})}}}]);
+//# sourceMappingURL=component---src-pages-about-js-0aae958bf35bfbe7083c.js.map
