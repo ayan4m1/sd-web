@@ -17,7 +17,7 @@
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "lint": "eslint ./src/",
-    "deploy": "gatsby build && gh-pages -d public/"
+    "deploy": "rm -rf public/ && gatsby build && gh-pages -d public/"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
